@@ -1,11 +1,16 @@
 const Comment = require('./model')
+const send = require('../../../utils/response')
+const log = require('../../../utils/log')
+//TODO implement every response
 
 function comments(req, res) {
     Comment.find((error, data) => {
         if (!error) {
-            res.send(data)
+            send.response200(res, data)
+            log.write('testing') //Testing logs
+            //res.send(data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al mostrar el listado de comentarios' })
+            send.response404(res)
         }
     })
 }
@@ -13,14 +18,16 @@ function comments(req, res) {
 function comment(req, res) {
     Comment.findById(req.params.id, (err, data) => {
         if (!err) {
+            send.response200(res, data)
             res.send(data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al mostrar el comentario' })
+            send.response404(res)
         }
     })
 }
 
 function create(req, res) {
+    //TODO when creating an object, get the local date and time and add it to the object
     const comentario = new Comment({
         contenido: req.body.contenido,
         usuario_id: req.body.usuario_id,
@@ -29,7 +36,8 @@ function create(req, res) {
 
     comentario.save((err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Comentario añadido con éxito', comment: data })
+            send.response201(res, data)
+            //res.status(200).json({ code: 200, message: 'Comentario añadido con éxito', comment: data })
         } else {
             res.status(400).json({ code: 400, message: 'Error al insertar el comentario' })
         }
