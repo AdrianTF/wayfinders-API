@@ -34,7 +34,7 @@ function create(req, res) {
         publicacion_id: req.body.publicacion_id
     })
 
-    comentario.save((err, data) => {
+    comentario.save((err, data) => { //TODO mongo functions inside services/mongo files
         if (!err) {
             send.response201(res, data)
             //res.status(200).json({ code: 200, message: 'Comentario añadido con éxito', comment: data })
