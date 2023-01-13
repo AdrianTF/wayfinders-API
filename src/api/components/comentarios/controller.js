@@ -1,7 +1,6 @@
 const Comment = require('./model')
 const send = require('../../../utils/response')
 const log = require('../../../utils/log')
-//TODO implement every response
 
 function comments(req, res) {
     Comment.find((error, data) => {
@@ -19,7 +18,6 @@ function comment(req, res) {
     Comment.findById(req.params.id, (err, data) => {
         if (!err) {
             send.response200(res, data)
-            res.send(data)
         } else {
             send.response404(res)
         }
@@ -39,7 +37,8 @@ function create(req, res) {
             send.response201(res, data)
             //res.status(200).json({ code: 200, message: 'Comentario añadido con éxito', comment: data })
         } else {
-            res.status(400).json({ code: 400, message: 'Error al insertar el comentario' })
+            send.response204(res)
+            //res.status(400).json({ code: 400, message: 'Error al insertar el comentario' })
         }
     })
 }
@@ -47,9 +46,11 @@ function create(req, res) {
 function remove(req, res) {
     Comment.findByIdAndRemove(req.params.id, (err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Comentario borrado con éxito', comment: data })
+            send.response200(res, data)
+            //res.status(200).json({ code: 200, message: 'Comentario borrado con éxito', comment: data })
         } else {
-            res.status(400).json({ code: 400, message: 'Error al borrar el comentario' })
+            send.response204(res)
+            //res.status(400).json({ code: 400, message: 'Error al borrar el comentario' })
         }
     })
 }
@@ -63,10 +64,11 @@ function update(req, res) {
 
     Comment.findByIdAndUpdate(req.params.id, { $set: comentario}, { new: true }, (err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Comentario modificado con éxito', comment: data })
+            send.response200(res, data)
+            //res.status(200).json({ code: 200, message: 'Comentario modificado con éxito', comment: data })
         } else {
-            console.log(err)
-            res.status(400).json({ code: 400, message: 'Error al modificar el comentario' })
+            send.response204(res)
+            //res.status(400).json({ code: 400, message: 'Error al modificar el comentario' })
         }
     })
 }

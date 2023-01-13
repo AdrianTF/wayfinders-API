@@ -1,11 +1,13 @@
 const User = require('./model')
+const send = require('../../../utils/response')
+const log = require('../../../utils/log')
 
 function users(req, res) {
     User.find((error, data) => {
         if (!error) {
-            res.send(data)
+            send.response200(res, data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al mostrar el listado de usuarios' })
+            send.response404(res)
         }
     })
 }
@@ -13,9 +15,9 @@ function users(req, res) {
 function user(req, res) {
     User.findById(req.params.id, (err, data) => {
         if (!err) {
-            res.send(data)
+            send.response200(res, data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al mostrar el usuario' })
+            send.response404(res)
         }
     })
 }
@@ -32,9 +34,9 @@ function create(req, res) {
 
     usuario.save((err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Usuario añadido con éxito', usuario: data })
+            send.response201(res, data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al insertar el usuario' })
+            send.response204(res)
         }
     })
 }
@@ -42,10 +44,11 @@ function create(req, res) {
 function remove(req, res) {
     User.findByIdAndRemove(req.params.id, (err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Usuario borrado con éxito', usuario: data })
+            send.response200(res, data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al borrar el usuario' })
+            send.response204(res)
         }
+    
     })
 }
 
@@ -59,12 +62,11 @@ function update(req, res) {
         siguiendo: req.body.siguiendo
     })
 
-    User.findByIdAndUpdate(req.params.id, { $set: usuario}, { new: true }, (err, data) => {
+    User.findByIdAndUpdate(req.params.id, { $set: usuario }, { new: true }, (err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Usuario modificado con éxito', usuario: data })
+            send.response200(res, data)
         } else {
-            console.log(err)
-            res.status(400).json({ code: 400, message: 'Error al modificar el usuario' })
+            send.response204(res)
         }
     })
 }

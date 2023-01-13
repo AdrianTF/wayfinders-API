@@ -14,6 +14,19 @@ function response201(response, data) {
     });
 }
 
+//No content. Create, Update or Delete not working.
+//This response has no body.
+//TODO Review this type of response.
+function response204(response) {
+    response.status(204).json({
+        status: 'error',
+        data: {
+            id: '204',
+            name: 'No content',
+        },
+    });
+}
+
 // Not Modified
 function response304(response) {
     response.status(304).json({
@@ -24,6 +37,18 @@ function response304(response) {
         },
     });
 }
+
+// Unauthorized
+function response401(response) {
+    response.status(401).json({
+      status: 'error',
+      data: {
+        id: '401',
+        name: 'Unauthorized',
+      },
+    });
+  }
+
 
 // Not Found
 function response404(response) {
@@ -50,6 +75,7 @@ function response500(response) {
 module.exports = {
     response200: (response, data) => response200(response, data),
     response201: (response, data) => response201(response, data),
+    response204: (response) => response204(response),
     response304: (response) => response304(response),
     response404: (response) => response404(response),
     response500: (response) => response500(response),

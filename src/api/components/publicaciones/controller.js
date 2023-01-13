@@ -1,11 +1,13 @@
 const userPost = require('./model')
+const send = require('../../../utils/response')
+const log = require('../../../utils/log')
 
 function posts(req, res) {
     userPost.find((error, data) => {
         if (!error) {
-            res.send(data)
+            send.response200(res, data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al mostrar el listado de publicaciones' })
+            send.response404(res)
         }
     })
 }
@@ -13,9 +15,9 @@ function posts(req, res) {
 function post(req, res) {
     userPost.findById(req.params.id, (err, data) => {
         if (!err) {
-            res.send(data)
+            send.response200(res, data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al mostrar la publicación' })
+            send.response404(res)
         }
     })
 }
@@ -33,9 +35,9 @@ function create(req, res) {
 
     publicacion.save((err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Usuario añadido con éxito', usuario: data })
+            send.response201(res,data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al insertar el usuario', error: err })
+            send.response204(res)
         }
     })
 }
@@ -43,9 +45,9 @@ function create(req, res) {
 function remove(req, res) {
     userPost.findByIdAndRemove(req.params.id, (err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Publicación borrada con éxito', post: data })
+            send.response200(res,data)
         } else {
-            res.status(400).json({ code: 400, message: 'Error al borrar la publicación' })
+            send.response204(res)
         }
     })
 }
@@ -63,10 +65,9 @@ function update(req, res) {
 
     userPost.findByIdAndUpdate(req.params.id, { $set: publicacion }, { new: true }, (err, data) => {
         if (!err) {
-            res.status(200).json({ code: 200, message: 'Publicación modificada con éxito', post: data })
+            send.response200(res, data)
         } else {
-            console.log(err)
-            res.status(400).json({ code: 400, message: 'Error al modificar la publicación' })
+            send.response204(res)
         }
     })
 }
