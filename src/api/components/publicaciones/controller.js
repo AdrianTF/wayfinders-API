@@ -37,7 +37,7 @@ function create(req, res) {
         if (!err) {
             send.response201(res,data)
         } else {
-            send.response204(res)
+            send.response404(res)
         }
     })
 }
@@ -47,7 +47,7 @@ function remove(req, res) {
         if (!err) {
             send.response200(res,data)
         } else {
-            send.response204(res)
+            send.response404(res)
         }
     })
 }
@@ -67,7 +67,7 @@ function update(req, res) {
         if (!err) {
             send.response200(res, data)
         } else {
-            send.response204(res)
+            send.response404(res)
         }
     })
 }

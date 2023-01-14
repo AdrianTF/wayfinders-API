@@ -25,7 +25,7 @@ function comment(req, res) {
 }
 
 function create(req, res) {
-    //TODO when creating an object, get the local date and time and add it to the object
+    //TODO when creating an object, get the local date and time and add it to the object. Maybe from the schema itself?
     const comentario = new Comment({
         contenido: req.body.contenido,
         usuario_id: req.body.usuario_id,
@@ -37,7 +37,7 @@ function create(req, res) {
             send.response201(res, data)
             //res.status(200).json({ code: 200, message: 'Comentario añadido con éxito', comment: data })
         } else {
-            send.response204(res)
+            send.response404(res)
             //res.status(400).json({ code: 400, message: 'Error al insertar el comentario' })
         }
     })
@@ -49,7 +49,7 @@ function remove(req, res) {
             send.response200(res, data)
             //res.status(200).json({ code: 200, message: 'Comentario borrado con éxito', comment: data })
         } else {
-            send.response204(res)
+            send.response404(res)
             //res.status(400).json({ code: 400, message: 'Error al borrar el comentario' })
         }
     })
@@ -67,7 +67,7 @@ function update(req, res) {
             send.response200(res, data)
             //res.status(200).json({ code: 200, message: 'Comentario modificado con éxito', comment: data })
         } else {
-            send.response204(res)
+            send.response404(res)
             //res.status(400).json({ code: 400, message: 'Error al modificar el comentario' })
         }
     })

@@ -1,5 +1,11 @@
 const mongoose = require('mongoose')
 
+/*We can use 
+{
+    type: Date,
+    default: Date.now
+}*/
+
 const commentSchema = mongoose.Schema({
     fecha: {
         type: Date,
