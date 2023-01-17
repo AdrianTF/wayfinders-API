@@ -16,11 +16,10 @@ app.get("/", (req, res) => {
 
 mongoose.connect(process.env.MONGODB_URI)
         .then(() => console.log('Connected to MongoDB Atlas'))
-        .catch((error) => console.log(error));
-
+        .catch((error) => console.log(`Failed to connect to MongoDB atlas: ${error.name}`)); 
 
 app.use(express.json())
 app.use(bodyParser.json()) 
 require('./src/routes.js')(app);
 
-app.listen(port, () => console.log('Servidor iniciado en el puerto', port))
+app.listen(port, () => console.log('Servidor iniciado en el puerto', port, '\n'))

@@ -24,9 +24,9 @@ function user(req, res) {
 
 function create(req, res) {
     const usuario = new User({
+        _id: req.body._id,
         nombre: req.body.nombre,
         apellido: req.body.apellido,
-        nombre_usuario: req.body.nombre_usuario,
         password: req.body.password,
         email: req.body.email,
         siguiendo: req.body.siguiendo

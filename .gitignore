@@ -2,3 +2,4 @@
 .env
 request.http
 log.txt
+config.js
