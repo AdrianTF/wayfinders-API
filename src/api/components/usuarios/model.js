@@ -26,8 +26,12 @@ const userSchema = mongoose.Schema({
         unique: true,
         match: emailRegex
     },
-    fecha_alta: {
-        type: Date,
+    fecha: {
+        type: String,
+        required: false
+    },
+    hora: {
+        type: String,
         required: false
     },
     siguiendo: [{
@@ -37,7 +41,8 @@ const userSchema = mongoose.Schema({
         type: String
     },
     admin: {
-        type: Boolean
+        type: Boolean,
+        default: false,
     }
 })
 

@@ -1,18 +1,12 @@
 const mongoose = require('mongoose')
 
-/*We can use 
-{
-    type: Date,
-    default: Date.now
-}*/
-
 const commentSchema = mongoose.Schema({
     fecha: {
-        type: Date,
+        type: String,
         required: false
     },
     hora: {
-        type: String, //Not sure?
+        type: String,
         required: false
     },
     contenido: {

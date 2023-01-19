@@ -3,11 +3,11 @@ const cats = ['senderismo', 'bicicleta', 'kayak'] //TODO add cats
 
 const userPostSchema = mongoose.Schema({
     fecha: {
-        type: Date,
+        type: String,
         required: false
     },
     hora: {
-        type: String, //Not sure?
+        type: String,
         required: false
     },
     nombre: {
@@ -48,7 +48,7 @@ const userPostSchema = mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-    }
+    },
 })
 
 let userPost = mongoose.model('Post', userPostSchema);

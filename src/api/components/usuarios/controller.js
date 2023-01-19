@@ -1,12 +1,15 @@
 const User = require('./model')
 const send = require('../../../utils/response')
 const log = require('../../../utils/log')
+const moment = require('moment')
+const bcrypt = require('bcrypt');
 
 function users(req, res) {
     User.find((error, data) => {
         if (!error) {
             send.response200(res, data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })
@@ -17,25 +20,32 @@ function user(req, res) {
         if (!err) {
             send.response200(res, data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })
 }
 
 function create(req, res) {
+    //If needed, this function can be within a service, aswell as the function to compare hashed passwords
+    let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT)) 
+
     const usuario = new User({
         _id: req.body._id,
         nombre: req.body.nombre,
         apellido: req.body.apellido,
-        password: req.body.password,
+        password: hashedPassword,
         email: req.body.email,
-        siguiendo: req.body.siguiendo
+        siguiendo: req.body.siguiendo,
+        hora: moment().format('HH:mm:ss').toString(),
+        fecha: moment().format('DD/MM/YYYY').toString()
     })
 
     usuario.save((err, data) => {
         if (!err) {
             send.response201(res, data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })
@@ -46,6 +56,7 @@ function remove(req, res) {
         if (!err) {
             send.response200(res, data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     
@@ -53,11 +64,13 @@ function remove(req, res) {
 }
 
 function update(req, res) {
+    let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
+
     const usuario = ({
         nombre: req.body.nombre,
         apellido: req.body.apellido,
         nombre_usuario: req.body.nombre_usuario,
-        password: req.body.password,
+        password: hashedPassword,
         email: req.body.email,
         siguiendo: req.body.siguiendo
     })
@@ -66,6 +79,7 @@ function update(req, res) {
         if (!err) {
             send.response200(res, data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })

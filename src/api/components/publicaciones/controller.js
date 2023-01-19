@@ -1,12 +1,14 @@
 const userPost = require('./model')
 const send = require('../../../utils/response')
 const log = require('../../../utils/log')
+const moment = require('moment')
 
 function posts(req, res) {
     userPost.find((error, data) => {
         if (!error) {
             send.response200(res, data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })
@@ -17,6 +19,7 @@ function post(req, res) {
         if (!err) {
             send.response200(res, data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })
@@ -30,13 +33,16 @@ function create(req, res) {
         dificultad: req.body.dificultad,
         min_duracion: req.body.min_duracion,
         contenido: req.body.contenido,
-        usuario_id: req.body.usuario_id
+        usuario_id: req.body.usuario_id,
+        hora: moment().format('HH:mm:ss').toString(),
+        fecha: moment().format('DD/MM/YYYY').toString()
     })
 
     publicacion.save((err, data) => {
         if (!err) {
             send.response201(res,data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })
@@ -47,6 +53,7 @@ function remove(req, res) {
         if (!err) {
             send.response200(res,data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })
@@ -67,6 +74,7 @@ function update(req, res) {
         if (!err) {
             send.response200(res, data)
         } else {
+            log.write(err)
             send.response404(res)
         }
     })
