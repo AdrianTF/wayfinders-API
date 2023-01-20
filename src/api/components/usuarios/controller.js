@@ -4,7 +4,7 @@ const log = require('../../../utils/log')
 const moment = require('moment')
 const bcrypt = require('bcrypt');
 
-function users(req, res) {
+function users(req, res, next) {
     User.find((error, data) => {
         if (!error) {
             send.response200(res, data)

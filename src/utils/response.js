@@ -77,6 +77,7 @@ module.exports = {
     response201: (response, data) => response201(response, data),
     response204: (response) => response204(response),
     response304: (response) => response304(response),
+    response401: (response) => response401(response),
     response404: (response) => response404(response),
     response500: (response) => response500(response),
 }
