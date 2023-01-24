@@ -6,7 +6,7 @@ module.exports = (admin) => (req, res, next) => {
     let token = req.headers['authorization'];
 
     if (!token) {
-        return send.response404(res) //Should be res 403
+        return send.response403(res) 
     }
     
     token = token.substring(7);

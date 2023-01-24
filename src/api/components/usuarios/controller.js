@@ -6,29 +6,34 @@ const bcrypt = require('bcrypt');
 
 function users(req, res, next) {
     User.find((error, data) => {
-        if (!error) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res, data)
+        }
+        send.response200(res, data)
     })
 }
 
 function user(req, res) {
-    User.findById(req.params.id, (err, data) => {
-        if (!err) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    User.findById(req.params.id, (error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res, data)
+        }
+
+        send.response200(res, data)
     })
 }
 
 function create(req, res) {
     //If needed, this function can be within a service, aswell as the function to compare hashed passwords
-    let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT)) 
+    let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
 
     const usuario = new User({
         _id: req.body._id,
@@ -41,25 +46,28 @@ function create(req, res) {
         fecha: moment().format('DD/MM/YYYY').toString()
     })
 
-    usuario.save((err, data) => {
-        if (!err) {
-            send.response201(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    usuario.save((error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
+        } 
+        if(!data){
+            return send.response404(res)
         }
+        send.response201(res, data)
     })
 }
 
 function remove(req, res) {
-    User.findByIdAndRemove(req.params.id, (err, data) => {
-        if (!err) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    User.findByIdAndRemove(req.params.id, (error, data) => {
+        if(error) {
+            log.write(error)
+            return send.response500(res)
         }
-    
+        if (!data) {
+            return send.response404(res)
+        } 
+        send.response200(res, data)
     })
 }
 
@@ -75,13 +83,15 @@ function update(req, res) {
         siguiendo: req.body.siguiendo
     })
 
-    User.findByIdAndUpdate(req.params.id, { $set: usuario }, { new: true }, (err, data) => {
-        if (!err) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    User.findByIdAndUpdate(req.params.id, { $set: usuario }, { new: true }, (error, data) => {
+        if(error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        } 
+        send.response200(res, data)
     })
 }
 

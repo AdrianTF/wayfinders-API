@@ -2,7 +2,7 @@
 function response200(response, data) {
     response.status(200).json({
         status: 'ok',
-        data: data,
+        data: [data],
     });
 }
 
@@ -10,7 +10,7 @@ function response200(response, data) {
 function response201(response, data) {
     response.status(201).json({
         status: 'ok',
-        data: data,
+        data: [data],
     });
 }
 
@@ -20,10 +20,10 @@ function response201(response, data) {
 function response204(response) {
     response.status(204).json({
         status: 'error',
-        data: {
+        data: [{
             id: '204',
             name: 'No content',
-        },
+        }],
     });
 }
 
@@ -31,33 +31,43 @@ function response204(response) {
 function response304(response) {
     response.status(304).json({
         status: 'error',
-        data: {
+        data: [{
             id: '304',
             name: 'Not modified',
-        },
+        }],
     });
 }
 
 // Unauthorized
 function response401(response) {
     response.status(401).json({
-      status: 'error',
-      data: {
-        id: '401',
-        name: 'Unauthorized',
-      },
+        status: 'error',
+        data: [{
+            id: '401',
+            name: 'Unauthorized',
+        }],
     });
-  }
+}
 
+// Forbidden
+function response403(response) {
+    response.status(403).json({
+        status: 'error',
+        data: [{
+            id: '403',
+            name: 'Forbidden',
+        }],
+    });
+}
 
 // Not Found
 function response404(response) {
     response.status(404).json({
         status: 'error',
-        data: {
+        data: [{
             id: '404',
             name: 'Not found',
-        },
+        }],
     });
 }
 
@@ -65,10 +75,10 @@ function response404(response) {
 function response500(response) {
     response.status(500).json({
         status: 'error',
-        data: {
+        data: [{
             id: '500',
             name: 'Internal Server Error',
-        },
+        }],
     });
 }
 
@@ -78,6 +88,7 @@ module.exports = {
     response204: (response) => response204(response),
     response304: (response) => response304(response),
     response401: (response) => response401(response),
+    response403: (response) => response403(response),
     response404: (response) => response404(response),
     response500: (response) => response500(response),
 }

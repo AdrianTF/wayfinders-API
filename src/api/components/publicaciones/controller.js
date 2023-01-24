@@ -5,23 +5,27 @@ const moment = require('moment')
 
 function posts(req, res) {
     userPost.find((error, data) => {
-        if (!error) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response200(res, data)
     })
 }
 
 function post(req, res) {
-    userPost.findById(req.params.id, (err, data) => {
-        if (!err) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    userPost.findById(req.params.id, (error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response200(res, data)
     })
 }
 
@@ -38,24 +42,28 @@ function create(req, res) {
         fecha: moment().format('DD/MM/YYYY').toString()
     })
 
-    publicacion.save((err, data) => {
-        if (!err) {
-            send.response201(res,data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    publicacion.save((error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response201(res, data)
     })
 }
 
 function remove(req, res) {
-    userPost.findByIdAndRemove(req.params.id, (err, data) => {
-        if (!err) {
-            send.response200(res,data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    userPost.findByIdAndRemove(req.params.id, (error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response200(res, data)
     })
 }
 
@@ -70,13 +78,15 @@ function update(req, res) {
         usuario_id: req.body.usuario_id
     })
 
-    userPost.findByIdAndUpdate(req.params.id, { $set: publicacion }, { new: true }, (err, data) => {
-        if (!err) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    userPost.findByIdAndUpdate(req.params.id, { $set: publicacion }, { new: true }, (error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response200(res, data)
     })
 }
 

@@ -5,23 +5,27 @@ const moment = require('moment')
 
 function comments(req, res) {
     Comment.find((error, data) => {
-        if (!error) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response200(res, data)
     })
 }
 
 function comment(req, res) {
-    Comment.findById(req.params.id, (err, data) => {
-        if (!err) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    Comment.findById(req.params.id, (error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response200(res, data)
     })
 }
 
@@ -34,24 +38,28 @@ function create(req, res) {
         fecha: moment().format('DD/MM/YYYY').toString()
     })
 
-    comentario.save((err, data) => { //TODO mongo functions inside services/mongo files
-        if (!err) {
-            send.response201(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    comentario.save((error, data) => { //TODO mongo functions inside services/mongo files
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response201(res, data)
     })
 }
 
 function remove(req, res) {
-    Comment.findByIdAndRemove(req.params.id, (err, data) => {
-        if (!err) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    Comment.findByIdAndRemove(req.params.id, (error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response200(res, data)
     })
 }
 
@@ -62,13 +70,15 @@ function update(req, res) {
         publicacion_id: req.body.publicacion_id
     })
 
-    Comment.findByIdAndUpdate(req.params.id, { $set: comentario}, { new: true }, (err, data) => {
-        if (!err) {
-            send.response200(res, data)
-        } else {
-            log.write(err)
-            send.response404(res)
+    Comment.findByIdAndUpdate(req.params.id, { $set: comentario }, { new: true }, (error, data) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response200(res, data)
     })
 }
 

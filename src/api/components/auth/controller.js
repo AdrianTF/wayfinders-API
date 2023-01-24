@@ -3,13 +3,15 @@ const send = require('../../../utils/response')
 const service = require('../../../services/authService')
 const moment = require('moment')
 const bcrypt = require('bcrypt')
+const log = require('../../../utils/log')
 
 
 function login(req, res) {
     //Validations with joi here
 
-    User.findOne({ _id: req.body._id }, (err, user) => {
-        if (err) {
+    User.findOne({ _id: req.body._id }, (error, user) => {
+        if (error) {
+            log.write(error)
             return send.response500(res)
         }
         if (!user) {
@@ -39,19 +41,22 @@ function register(req, res) {
         apellido: req.body.apellido,
         password: hashedPassword,
         email: req.body.email,
-        siguiendo: req.body.siguiendo,
+        siguiendo: [], 
         hora: moment().format('HH:mm:ss').toString(),
         fecha: moment().format('DD/MM/YYYY').toString()
     })
 
     const token = service.generateToken(usuario._id, usuario.admin)
 
-    usuario.save((err, data) => {
-        if (!err) {
-            send.response201(res, token)
-        } else {
-            send.response404(res)
+    usuario.save((error, data) => {
+        if(error){
+            log.write(error)
+            return send.response500(res)
         }
+        if (!data) {
+            return send.response404(res)
+        }
+        send.response201(res, token)
     })
 }
 
