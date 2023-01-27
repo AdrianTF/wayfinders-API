@@ -7,8 +7,6 @@ const log = require('../../../utils/log')
 
 
 function login(req, res) {
-    //Validations with joi here
-
     User.findOne({ _id: req.body._id }, (error, user) => {
         if (error) {
             log.write(error)
@@ -31,8 +29,6 @@ function login(req, res) {
 }
 
 function register(req, res) {
-    //TODO joi validations
-
     let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
 
     const usuario = new User({

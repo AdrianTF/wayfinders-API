@@ -1,4 +1,5 @@
 const fs = require('fs');
+const moment = require('moment')
 
 function readLOG() {
   const log = fs.readFileSync('data/log.txt');
@@ -6,9 +7,12 @@ function readLOG() {
 }
 
 function writeLOG(message) {
+  if (!fs.existsSync('data')) {
+    fs.mkdirSync('data');
+  }
   const stream = fs.createWriteStream('data/log.txt', { flags: 'a' });
   stream.once('open', () => {
-    stream.write(`> ${message}\r\n`);
+    stream.write(`> [${moment().format('DD/MM HH:mm:ss').toString()}] ${message}\r\n`);
   });
 }
 

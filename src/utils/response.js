@@ -1,13 +1,20 @@
 //Ok
 function response200(response, data) {
+    customData = data
+
+    if(!Array.isArray(data)){
+        customData = [data]
+    }
+
     response.status(200).json({
         status: 'ok',
-        data: [data],
+        data: customData,
     });
 }
 
 //Created
 function response201(response, data) {
+    //Array check not needed
     response.status(201).json({
         status: 'ok',
         data: [data],
