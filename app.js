@@ -19,6 +19,7 @@ mongoose.connect(process.env.MONGODB_URI)
         .catch((error) => console.log(`Failed to connect to MongoDB atlas: ${error.name}`)); 
 
 app.use(express.json())
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json()) 
 require('./src/routes.js')(app);
 
