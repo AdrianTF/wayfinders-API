@@ -1,58 +1,18 @@
-const express = require('express')
-const router = express.Router()
-const multer = require('multer');
 const User = require('../usuarios/model')
 const send = require('../../../utils/response')
-
 const fs = require('fs')
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        //Crear carpeta uploads si no existe
-        cb(null, './uploads/');
-    },
-    filename: function (req, file, cb) {
-        //console.log(new Date().toISOString().replace(/[:.]/g, '-'))
-        cb(null, new Date().toISOString().replace(/[:.]/g, '-') + file.originalname);
-    }
-});
+const log = require('../../../utils/log')
 
 
-const fileFilter = (req, file, cb) => {
-    // reject a file
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/svg' || file.mimetype === 'image/jpg') {
-        req.isFileValid = true
-        cb(null, true);
-    } else {
-        req.isFileValid = false
-        cb(null, false);
-    }
-};
-
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 1024 * 1024 * 10
-    },
-    fileFilter: fileFilter
-}).single('foto'); //Añadido para probar función de middleware
-
-const multerMiddleWare = (req, res, next) => {
-    upload(req, res,
-        (error) => {
-            if (!error) return next();
-            return send.response500(res);
-        }
-    );
-};
-
-router.put('/user/:id', multerMiddleWare, (req, res, next) => {
+function update(req, res, next) {
     if (!req.isFileValid) {
+        log.write('Uploading invalid file type.')
         return send.response500(res)
     }
 
     User.findById(req.params.id, (error, data) => {
-        if(error){
+        if (error) {
+            log.write(error)
             return send.response500(res)
         }
 
@@ -76,6 +36,8 @@ router.put('/user/:id', multerMiddleWare, (req, res, next) => {
             send.response200(res, user)
         })
     })
-})
+}
 
-module.exports = router;
+module.exports = {
+    update: (req, res, next) => update(req, res, next)
+}
