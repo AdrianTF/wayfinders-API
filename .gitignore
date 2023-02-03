@@ -3,5 +3,8 @@
 request.http
 log.txt
 config.js
-uploads/
-!uploads/default.jpg
+*.jpg
+*.png
+*.svg
+*.jpeg
+!default.jpg
