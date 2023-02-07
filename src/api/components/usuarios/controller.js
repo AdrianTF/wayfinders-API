@@ -41,7 +41,7 @@ function create(req, res) {
         apellido: req.body.apellido,
         password: hashedPassword,
         email: req.body.email,
-        siguiendo: req.body.siguiendo,
+        siguiendo: [],
         hora: moment().format('HH:mm:ss').toString(),
         fecha: moment().format('DD/MM/YYYY').toString()
     })
@@ -72,18 +72,21 @@ function remove(req, res) {
 }
 
 function update(req, res) {
-    let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
+    if(req.body.password) {
+        req.body.password = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
+    }
+    //let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
 
-    const usuario = ({
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        nombre_usuario: req.body.nombre_usuario,
-        password: hashedPassword,
-        email: req.body.email,
-        siguiendo: req.body.siguiendo
-    })
-
-    User.findByIdAndUpdate(req.params.id, { $set: usuario }, { new: true }, (error, data) => {
+    // const usuario = ({
+    //     nombre: req.body.nombre,
+    //     apellido: req.body.apellido,
+    //     nombre_usuario: req.body.nombre_usuario,
+    //     password: hashedPassword,
+    //     email: req.body.email,
+    //     siguiendo: req.body.siguiendo
+    // })
+    console.log(req.body);
+    User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (error, data) => {
         if(error) {
             log.write(error)
             return send.response500(res)

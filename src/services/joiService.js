@@ -1,6 +1,19 @@
 const Joi = require('joi')
+const { use } = require('../api/components/images/routes')
 
 function validateUser (user) {
+    const schema = Joi.object({
+        _id: Joi.string().alphanum().min(3).max(20).trim(),
+        nombre: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/),
+        apellido: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/),
+        password: Joi.string().min(6).max(20),
+        email: Joi.string().email()
+    })
+
+    return schema.validate(user)
+}
+
+function validateRequiredUser (user) {
     const schema = Joi.object({
         _id: Joi.string().alphanum().min(3).max(20).trim().required(),
         nombre: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/).required(),
@@ -38,6 +51,7 @@ function validateComment (comment) {
 
 module.exports = {
     user: (user) => validateUser(user),
+    requiredUser: (user) => validateRequiredUser(user),
     post: (post) => validatePost(post),
     comment: (comment) => validateComment(comment)
 } 

@@ -20,8 +20,10 @@ function login(req, res) {
             req.body.password,
             user.password
         );
-        if (!isValidPassword)
+        if (!isValidPassword){
+            console.log('Contraseña incorrecta');
             return send.response404(res) //Should give more info about error.
+        }
 
         const token = service.generateToken(user._id, user.admin)
         send.response200(res, token)

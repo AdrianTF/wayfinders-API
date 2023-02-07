@@ -7,8 +7,8 @@ const router = express.Router()
 
 router.get('/', /*[auth(false)],*/ controller.users)
 router.get('/:id', controller.user)
-router.post('/', [validator.user()], controller.create)
+router.post('/', [validator.requiredUser()], controller.create)
 router.delete('/:id', controller.remove)
-router.put('/:id', controller.update)
+router.put('/:id',[validator.user()], controller.update)
 
 module.exports = router;

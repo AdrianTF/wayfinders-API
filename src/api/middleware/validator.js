@@ -11,6 +11,15 @@ const user = () => (req, res, next) => {
     next()
 }
 
+const requiredUser = () => (req, res, next) => {
+    const { error } = validation.requiredUser(req.body)
+    if (error) {
+        log.write(error)
+        return send.response404(res)
+    }
+    next()
+}
+
 const post = () => (req, res, next) => {
     const { error } = validation.post(req.body)
     if (error) {
@@ -31,6 +40,7 @@ const comment = () => (req, res, next) => {
 
 module.exports = {
     user,
+    requiredUser,
     post,
     comment
 }
