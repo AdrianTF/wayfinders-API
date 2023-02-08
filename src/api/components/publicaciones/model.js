@@ -36,14 +36,15 @@ const userPostSchema = mongoose.Schema({
         type: String
     },
     foto: {
-        type: String
+        type: String //TODO review
     },
     privacidad: {
-        type: Boolean //TODO review
-    },
-    empresa: {
         type: String,
+        enum: ['privado', 'amigos', 'publico']
     },
+    coordenadas: [[{
+        type: Number
+    }]],
     usuario_id: {
         type: String,
         required: true,

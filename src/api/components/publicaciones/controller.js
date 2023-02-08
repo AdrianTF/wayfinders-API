@@ -39,7 +39,9 @@ function create(req, res) {
         contenido: req.body.contenido,
         usuario_id: req.body.usuario_id,
         hora: moment().format('HH:mm:ss').toString(),
-        fecha: moment().format('DD/MM/YYYY').toString()
+        fecha: moment().format('DD/MM/YYYY').toString(),
+        privacidad: req.body.privacidad,
+        coordenadas: req.body.coordenadas
     })
 
     publicacion.save((error, data) => {

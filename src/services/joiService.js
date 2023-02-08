@@ -1,7 +1,6 @@
 const Joi = require('joi')
-const { use } = require('../api/components/images/routes')
 
-function validateUser (user) {
+function validateUser(user) {
     const schema = Joi.object({
         _id: Joi.string().alphanum().min(3).max(20).trim(),
         nombre: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/),
@@ -13,7 +12,7 @@ function validateUser (user) {
     return schema.validate(user)
 }
 
-function validateRequiredUser (user) {
+function validateRequiredUser(user) {
     const schema = Joi.object({
         _id: Joi.string().alphanum().min(3).max(20).trim().required(),
         nombre: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/).required(),
@@ -25,7 +24,7 @@ function validateRequiredUser (user) {
     return schema.validate(user)
 }
 
-function validatePost (post) {
+function validatePost(post) {
     const schema = Joi.object({
         nombre: Joi.string().min(1).max(70).trim().required(),
         cat: Joi.string().valid('senderismo', 'bicicleta', 'kayak').required(),
@@ -33,13 +32,15 @@ function validatePost (post) {
         dificultad: Joi.string().valid('facil', 'media', 'dificil').required(),
         min_duracion: Joi.number().greater(0).integer().required(),
         contenido: Joi.string().min(1).max(500).required(),
-        usuario_id: Joi.string().alphanum().min(3).max(20).trim().required()
+        privacidad: Joi.string().valid('privado', 'amigos', 'publico').required(),
+        usuario_id: Joi.string().alphanum().min(3).max(20).trim().required(),
+        coordenadas: Joi.any().optional()
     })
 
     return schema.validate(post)
 }
 
-function validateComment (comment) {
+function validateComment(comment) {
     const schema = Joi.object({
         contenido: Joi.string().min(1).max(300).required(),
         usuario_id: Joi.string().alphanum().min(3).max(20).trim().required(),
