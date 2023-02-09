@@ -10,5 +10,7 @@ router.get('/:id', controller.user)
 router.post('/', [validator.requiredUser()], controller.create)
 router.delete('/:id', controller.remove)
 router.put('/:id',[validator.user()], controller.update)
+router.put('/follow/:id', controller.follow)
+router.put('/unfollow/:id', controller.unfollow)
 
 module.exports = router;

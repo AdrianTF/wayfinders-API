@@ -4,6 +4,7 @@ const uploader = require('../../middleware/uploader')
 
 const router = express.Router()
 
-router.put('/user/:id', uploader, controller.update)     
+router.put('/user/:id', uploader, controller.update)
+router.post('/remove', controller.remove)     
 
 module.exports = router;

@@ -98,10 +98,38 @@ function update(req, res) {
     })
 }
 
+function follow(req,  res) {
+    User.findByIdAndUpdate(req.params.id, { $push: { siguiendo: req.body.user } }, { new: true }, (error, data) =>{
+        if(error) {
+            log.write(error)
+            return send.response500(res)
+        }
+        if (!data) {
+            return send.response404(res)
+        } 
+        send.response200(res, data)
+    })
+}
+
+function unfollow(req,  res) {
+    User.findByIdAndUpdate(req.params.id, { $pull: { siguiendo: req.body.user } }, { new: true }, (error, data) =>{
+        if(error) {
+            log.write(error)
+            return send.response500(res)
+        }
+        if (!data) {
+            return send.response404(res)
+        } 
+        send.response200(res, data)
+    })
+}
+
 module.exports = {
     users: (req, res) => users(req, res),
     user: (req, res) => user(req, res),
     create: (req, res) => create(req, res),
     remove: (req, res) => remove(req, res),
-    update: (req, res) => update(req, res)
+    update: (req, res) => update(req, res),
+    follow: (req, res) => follow(req, res),
+    unfollow: (req, res) => unfollow(req, res)
 }
