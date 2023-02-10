@@ -18,7 +18,6 @@ module.exports = {
         upload.multi(req, res,
             (error) => {
                 if (!error) {
-                    console.log('Pasa por el next()')
                     return next();
                 }
                 log.write(error)

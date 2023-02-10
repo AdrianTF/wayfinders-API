@@ -28,6 +28,16 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
+const multiFileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/svg' || file.mimetype === 'image/jpg') {
+        req.isFileValid = true
+        cb(null, true);
+    } else {
+        req.isFileValid = false
+        cb(null, false);
+    }
+};
+
 module.exports = {
     single: multer({
         storage: storage,
@@ -42,6 +52,6 @@ module.exports = {
         limits: {
             fileSize: 1024 * 1024 * 10
         },
-        fileFilter: fileFilter
+        fileFilter: multiFileFilter
     }).array('fotos', 5)
 }

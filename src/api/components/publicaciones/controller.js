@@ -41,7 +41,8 @@ function create(req, res) {
         hora: moment().format('HH:mm:ss').toString(),
         fecha: moment().format('DD/MM/YYYY').toString(),
         privacidad: req.body.privacidad,
-        coordenadas: req.body.coordenadas
+        coordenadas: req.body.coordenadas,
+        fotos: []
     })
 
     publicacion.save((error, data) => {
@@ -70,15 +71,6 @@ function remove(req, res) {
 }
 
 function update(req, res) {
-    // const publicacion = ({
-    //     nombre: req.body.nombre,
-    //     cat: req.body.cat,
-    //     km_distancia: req.body.km_distancia,
-    //     dificultad: req.body.dificultad,
-    //     min_duracion: req.body.min_duracion,
-    //     contenido: req.body.contenido,
-    //     usuario_id: req.body.usuario_id
-    // })
 
     userPost.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (error, data) => {
         if (error) {

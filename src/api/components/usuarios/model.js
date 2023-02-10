@@ -39,7 +39,7 @@ const userSchema = mongoose.Schema({
     }],
     foto: {
         type: String,
-        default: 'uploads/default.jpg'
+        default: 'uploads/users/default.jpg'
     },
     admin: {
         type: Boolean,

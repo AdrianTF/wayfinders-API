@@ -35,9 +35,9 @@ const userPostSchema = mongoose.Schema({
     contenido: {
         type: String
     },
-    foto: {
-        type: String //TODO review
-    },
+    fotos: [{
+        type: String,
+    }],
     privacidad: {
         type: String,
         enum: ['privado', 'amigos', 'publico']
