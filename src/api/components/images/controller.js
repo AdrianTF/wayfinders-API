@@ -17,7 +17,7 @@ function update(req, res, next) {
         }
 
         const userFilePath = './' + data.foto
-        if (fs.existsSync(userFilePath) && data.foto != 'uploads/default.jpg') {
+        if (fs.existsSync(userFilePath) && data.foto != 'uploads/users/default.jpg') {
             fs.unlinkSync(userFilePath)
         }
 
@@ -38,6 +38,17 @@ function update(req, res, next) {
     })
 }
 
+function multi(req, res, next){
+    if (!req.isFileValid) {
+        log.write('Uploading invalid file type.')
+        return send.response500(res)
+    }
+    //TODO
+    console.log(req.files);
+    send.response304(res)
+}
+
 module.exports = {
-    update: (req, res, next) => update(req, res, next)
+    update: (req, res, next) => update(req, res, next),
+    multi: (req, res, next) => multi(req, res, next)
 }

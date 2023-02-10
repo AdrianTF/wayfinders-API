@@ -1,13 +1,29 @@
 const send = require('../../utils/response')
 const upload = require('../../services/multerServices')
+const log = require('../../utils/log')
 
-module.exports = (req, res, next) => {
-    upload(req, res,
-        (error) => {
-            if (!error) {
-                return next();
+module.exports = {
+    single: (req, res, next) => {
+        upload.single(req, res,
+            (error) => {
+                if (!error) {
+                    return next();
+                }
+                log.write(error)
+                return send.response500(res);
             }
-            return send.response500(res);
-        }
-    );
-};
+        );
+    },
+    multi: (req, res, next) => {
+        upload.multi(req, res,
+            (error) => {
+                if (!error) {
+                    console.log('Pasa por el next()')
+                    return next();
+                }
+                log.write(error)
+                return send.response500(res);
+            }
+        );
+    }
+}
