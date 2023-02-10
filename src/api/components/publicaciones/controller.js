@@ -39,7 +39,9 @@ function create(req, res) {
         contenido: req.body.contenido,
         usuario_id: req.body.usuario_id,
         hora: moment().format('HH:mm:ss').toString(),
-        fecha: moment().format('DD/MM/YYYY').toString()
+        fecha: moment().format('DD/MM/YYYY').toString(),
+        privacidad: req.body.privacidad,
+        coordenadas: req.body.coordenadas
     })
 
     publicacion.save((error, data) => {
@@ -68,17 +70,17 @@ function remove(req, res) {
 }
 
 function update(req, res) {
-    const publicacion = ({
-        nombre: req.body.nombre,
-        cat: req.body.cat,
-        km_distancia: req.body.km_distancia,
-        dificultad: req.body.dificultad,
-        min_duracion: req.body.min_duracion,
-        contenido: req.body.contenido,
-        usuario_id: req.body.usuario_id
-    })
+    // const publicacion = ({
+    //     nombre: req.body.nombre,
+    //     cat: req.body.cat,
+    //     km_distancia: req.body.km_distancia,
+    //     dificultad: req.body.dificultad,
+    //     min_duracion: req.body.min_duracion,
+    //     contenido: req.body.contenido,
+    //     usuario_id: req.body.usuario_id
+    // })
 
-    userPost.findByIdAndUpdate(req.params.id, { $set: publicacion }, { new: true }, (error, data) => {
+    userPost.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (error, data) => {
         if (error) {
             log.write(error)
             return send.response500(res)

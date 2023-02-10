@@ -41,7 +41,7 @@ function create(req, res) {
         apellido: req.body.apellido,
         password: hashedPassword,
         email: req.body.email,
-        siguiendo: req.body.siguiendo,
+        siguiendo: [],
         hora: moment().format('HH:mm:ss').toString(),
         fecha: moment().format('DD/MM/YYYY').toString()
     })
@@ -72,18 +72,47 @@ function remove(req, res) {
 }
 
 function update(req, res) {
-    let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
+    if(req.body.password) {
+        req.body.password = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
+    }
+    //let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
 
-    const usuario = ({
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        nombre_usuario: req.body.nombre_usuario,
-        password: hashedPassword,
-        email: req.body.email,
-        siguiendo: req.body.siguiendo
+    // const usuario = ({
+    //     nombre: req.body.nombre,
+    //     apellido: req.body.apellido,
+    //     nombre_usuario: req.body.nombre_usuario,
+    //     password: hashedPassword,
+    //     email: req.body.email,
+    //     siguiendo: req.body.siguiendo
+    // })
+    console.log(req.body);
+    User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (error, data) => {
+        if(error) {
+            log.write(error)
+            return send.response500(res)
+        }
+        if (!data) {
+            return send.response404(res)
+        } 
+        send.response200(res, data)
     })
+}
 
-    User.findByIdAndUpdate(req.params.id, { $set: usuario }, { new: true }, (error, data) => {
+function follow(req,  res) {
+    User.findByIdAndUpdate(req.params.id, { $push: { siguiendo: req.body.user } }, { new: true }, (error, data) =>{
+        if(error) {
+            log.write(error)
+            return send.response500(res)
+        }
+        if (!data) {
+            return send.response404(res)
+        } 
+        send.response200(res, data)
+    })
+}
+
+function unfollow(req,  res) {
+    User.findByIdAndUpdate(req.params.id, { $pull: { siguiendo: req.body.user } }, { new: true }, (error, data) =>{
         if(error) {
             log.write(error)
             return send.response500(res)
@@ -100,5 +129,7 @@ module.exports = {
     user: (req, res) => user(req, res),
     create: (req, res) => create(req, res),
     remove: (req, res) => remove(req, res),
-    update: (req, res) => update(req, res)
+    update: (req, res) => update(req, res),
+    follow: (req, res) => follow(req, res),
+    unfollow: (req, res) => unfollow(req, res)
 }
