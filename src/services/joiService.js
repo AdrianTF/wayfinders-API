@@ -28,7 +28,7 @@ function validatePost(post) {
     const schema = Joi.object({
         nombre: Joi.string().min(1).max(70).trim().required(),
         cat: Joi.string().valid('senderismo', 'bicicleta', 'kayak').required(),
-        km_distancia: Joi.number().greater(0).integer().required(),
+        km_distancia: Joi.number().greater(0).required(),
         dificultad: Joi.string().valid('facil', 'media', 'dificil').required(),
         min_duracion: Joi.number().greater(0).integer().required(),
         contenido: Joi.string().min(1).max(500).required(),
