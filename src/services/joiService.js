@@ -1,10 +1,11 @@
 const Joi = require('joi')
+const namePattern = /^[a-zA-ZáéíóúñüÜÁÉÍÓÚÑ\s]+$/
 
 function validateUser(user) {
     const schema = Joi.object({
         _id: Joi.string().alphanum().min(3).max(20).trim(),
-        nombre: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/),
-        apellido: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/),
+        nombre: Joi.string().pattern(namePattern),
+        apellido: Joi.string().pattern(namePattern),
         password: Joi.string().min(6).max(20),
         email: Joi.string().email()
     })
@@ -15,8 +16,8 @@ function validateUser(user) {
 function validateRequiredUser(user) {
     const schema = Joi.object({
         _id: Joi.string().alphanum().min(3).max(20).trim().required(),
-        nombre: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/).required(),
-        apellido: Joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/).required(),
+        nombre: Joi.string().pattern(namePattern).required(),
+        apellido: Joi.string().pattern(namePattern).required(),
         password: Joi.string().min(6).max(20).required(),
         email: Joi.string().email().required()
     })

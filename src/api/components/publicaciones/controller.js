@@ -1,4 +1,5 @@
 const userPost = require('./model')
+const Comments = require('../comentarios/model')
 const send = require('../../../utils/response')
 const log = require('../../../utils/log')
 const moment = require('moment')
@@ -66,6 +67,12 @@ function remove(req, res) {
         if (!data) {
             return send.response404(res)
         }
+        Comments.deleteMany({publicacion_id: req.params.id}, (error, data) => {
+            if(error) {
+                log.write(error)
+                console.log('There was an error while performing the deleteMany operation.');
+            }
+        })
         send.response200(res, data)
     })
 }

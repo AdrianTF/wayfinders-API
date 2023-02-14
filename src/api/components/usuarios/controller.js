@@ -85,7 +85,6 @@ function update(req, res) {
     //     email: req.body.email,
     //     siguiendo: req.body.siguiendo
     // })
-    console.log(req.body);
     User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (error, data) => {
         if(error) {
             log.write(error)
