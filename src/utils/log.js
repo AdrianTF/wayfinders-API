@@ -1,12 +1,7 @@
 const fs = require('fs');
 const moment = require('moment')
 
-function readLOG() {
-  const log = fs.readFileSync('data/log.txt');
-  console.log(log);
-}
-
-function writeLOG(message) {
+function write(message) {
   if (!fs.existsSync('data')) {
     fs.mkdirSync('data');
   }
@@ -17,6 +12,5 @@ function writeLOG(message) {
 }
 
 module.exports = {
-  write: (message) => writeLOG(message),
-  read: () => readLOG(),
+  write: (message) => write(message),
 };

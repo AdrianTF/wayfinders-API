@@ -1,5 +1,6 @@
 const Joi = require('joi')
-const namePattern = /^[a-zA-ZáéíóúñüÜÁÉÍÓÚÑ\s]+$/
+const namePattern = /^[a-zA-ZáéíóúñüÜÁÉÍÓÚÑ\s]+$/  //TODO config?
+//TODO Check configs on every validation
 
 function validateUser(user) {
     const schema = Joi.object({

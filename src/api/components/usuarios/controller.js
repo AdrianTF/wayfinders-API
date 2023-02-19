@@ -32,7 +32,6 @@ function user(req, res) {
 }
 
 function create(req, res) {
-    //If needed, this function can be within a service, aswell as the function to compare hashed passwords
     let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
 
     const usuario = new User({
@@ -75,16 +74,7 @@ function update(req, res) {
     if(req.body.password) {
         req.body.password = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
     }
-    //let hashedPassword = bcrypt.hashSync(req.body.password, Number(process.env.SALT))
 
-    // const usuario = ({
-    //     nombre: req.body.nombre,
-    //     apellido: req.body.apellido,
-    //     nombre_usuario: req.body.nombre_usuario,
-    //     password: hashedPassword,
-    //     email: req.body.email,
-    //     siguiendo: req.body.siguiendo
-    // })
     User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (error, data) => {
         if(error) {
             log.write(error)

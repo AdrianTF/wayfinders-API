@@ -38,7 +38,7 @@ function create(req, res) {
         fecha: moment().format('DD/MM/YYYY').toString()
     })
 
-    comentario.save((error, data) => { //TODO mongo functions inside services/mongo files
+    comentario.save((error, data) => { 
         if (error) {
             log.write(error)
             return send.response500(res)
@@ -64,12 +64,6 @@ function remove(req, res) {
 }
 
 function update(req, res) {
-    // const comentario = ({
-    //     contenido: req.body.contenido,
-    //     usuario_id: req.body.usuario_id,
-    //     publicacion_id: req.body.publicacion_id
-    // })
-
     Comment.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }, (error, data) => {
         if (error) {
             log.write(error)

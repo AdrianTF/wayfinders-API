@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const cats = ['senderismo', 'bicicleta', 'kayak'] //TODO add cats
+const cats = ['senderismo', 'bicicleta', 'kayak'] //TODO config
 
 const userPostSchema = mongoose.Schema({
     fecha: {
