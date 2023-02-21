@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+const config = require('../../../config/config')
+
 
 const userSchema = mongoose.Schema({
     _id: {
@@ -24,7 +25,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        match: emailRegex
+        match: config.USER_EMAIL_REGEX
     },
     fecha: {
         type: String,
@@ -39,7 +40,7 @@ const userSchema = mongoose.Schema({
     }],
     foto: {
         type: String,
-        default: 'uploads/users/default.jpg' //TODO config?
+        default: config.DEFAULT_USER_IMAGE
     },
     admin: {
         type: Boolean,

@@ -23,7 +23,7 @@ function login(req, res) {
 
         if (!isValidPassword){
             console.log('Contraseña incorrecta');
-            return send.response404(res) //TODO Should give more info about error.
+            return send.response401(res)
         }
 
         const token = service.generateToken(user._id, user.admin)

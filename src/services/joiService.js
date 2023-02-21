@@ -1,13 +1,12 @@
 const Joi = require('joi')
-const namePattern = /^[a-zA-ZáéíóúñüÜÁÉÍÓÚÑ\s]+$/  //TODO config?
-//TODO Check configs on every validation
+const config = require('../config/config')
 
 function validateUser(user) {
     const schema = Joi.object({
-        _id: Joi.string().alphanum().min(3).max(20).trim(),
-        nombre: Joi.string().pattern(namePattern),
-        apellido: Joi.string().pattern(namePattern),
-        password: Joi.string().min(6).max(20),
+        _id: Joi.string().alphanum().min(3).max(config.VALIDATOR_USER_MAX_USERNAME).trim(),
+        nombre: Joi.string().pattern(config.VALIDATOR_USER_NAME_REGEX),
+        apellido: Joi.string().pattern(config.VALIDATOR_USER_NAME_REGEX),
+        password: Joi.string().min(6).max(config.VALIDATOR_USER_MAX_PASSWORD),
         email: Joi.string().email()
     })
 
@@ -16,10 +15,10 @@ function validateUser(user) {
 
 function validateRequiredUser(user) {
     const schema = Joi.object({
-        _id: Joi.string().alphanum().min(3).max(20).trim().required(),
-        nombre: Joi.string().pattern(namePattern).required(),
-        apellido: Joi.string().pattern(namePattern).required(),
-        password: Joi.string().min(6).max(20).required(),
+        _id: Joi.string().alphanum().min(3).max(config.VALIDATOR_USER_MAX_USERNAME).trim().required(),
+        nombre: Joi.string().pattern(config.VALIDATOR_USER_NAME_REGEX).required(),
+        apellido: Joi.string().pattern(config.VALIDATOR_USER_NAME_REGEX).required(),
+        password: Joi.string().min(6).max(config.VALIDATOR_USER_MAX_PASSWORD).required(),
         email: Joi.string().email().required()
     })
 
@@ -28,14 +27,14 @@ function validateRequiredUser(user) {
 
 function validatePost(post) {
     const schema = Joi.object({
-        nombre: Joi.string().min(1).max(70).trim().required(),
+        nombre: Joi.string().min(1).max(config.VALIDATOR_POST_NAME_MAX).trim().required(),
         cat: Joi.string().valid('senderismo', 'bicicleta', 'kayak').required(),
         km_distancia: Joi.number().greater(0).required(),
         dificultad: Joi.string().valid('facil', 'media', 'dificil').required(),
         min_duracion: Joi.number().greater(0).integer().required(),
-        contenido: Joi.string().min(1).max(500).required(),
+        contenido: Joi.string().min(1).max(config.VALIDATOR_POST_CONTENT_MAX).required(),
         privacidad: Joi.string().valid('privado', 'amigos', 'publico').required(),
-        usuario_id: Joi.string().alphanum().min(3).max(20).trim().required(),
+        usuario_id: Joi.string().alphanum().min(3).max(config.VALIDATOR_USER_MAX_USERNAME).trim().required(),
         coordenadas: Joi.any().optional()
     })
 
@@ -44,8 +43,8 @@ function validatePost(post) {
 
 function validateComment(comment) {
     const schema = Joi.object({
-        contenido: Joi.string().min(1).max(300).required(),
-        usuario_id: Joi.string().alphanum().min(3).max(20).trim().required(),
+        contenido: Joi.string().min(1).max(config.VALIDATOR_COMMENT_CONTENT_MAX).required(),
+        usuario_id: Joi.string().alphanum().min(3).max(config.VALIDATOR_USER_MAX_USERNAME).trim().required(),
         publicacion_id: Joi.string().required()
     })
 

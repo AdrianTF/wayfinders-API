@@ -1,7 +1,9 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
+
 
 let generateToken = (user, admin) => {
-    return jwt.sign({ user: user, admin: admin }, process.env.TOKEN_SECRET, { expiresIn: "365d" });
+    return jwt.sign({ user: user, admin: admin }, process.env.TOKEN_SECRET, { expiresIn: config.TOKEN_TIMESPAN });
 }
 
 let verifyToken = (token) => {

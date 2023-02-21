@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const cats = ['senderismo', 'bicicleta', 'kayak'] //TODO config
+const config = require('../../../config/config')
 
 const userPostSchema = mongoose.Schema({
     fecha: {
@@ -17,8 +17,8 @@ const userPostSchema = mongoose.Schema({
     },
     cat: {
         type: String,
-        enum: cats,
-        default: 'senderismo'
+        enum: config.ROUTE_CATEGORIES,
+        default: config.ROUTE_DEFAULT_CATEGORY
     },
     km_distancia: {
         type: Number,
@@ -26,7 +26,7 @@ const userPostSchema = mongoose.Schema({
     },
     dificultad: {
         type: String,
-        enum: ['facil', 'media', 'dificil']
+        enum: config.ROUTE_DIFFICULTY
     },
     min_duracion: {
         type: Number,
@@ -40,7 +40,7 @@ const userPostSchema = mongoose.Schema({
     }],
     privacidad: {
         type: String,
-        enum: ['privado', 'amigos', 'publico']
+        enum: config.ROUTE_PRIVACY
     },
     coordenadas: [[{
         type: Number

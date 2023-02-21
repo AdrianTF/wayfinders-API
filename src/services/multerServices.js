@@ -1,4 +1,5 @@
 const multer = require('multer');
+const config = require('../config/config');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -21,17 +22,7 @@ const multiStorage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/svg' || file.mimetype === 'image/jpg') {
-        req.isFileValid = true
-        cb(null, true);
-    } else {
-        req.isFileValid = false
-        cb(null, false);
-    }
-};
-
-const multiFileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/svg' || file.mimetype === 'image/jpg') {
+    if (config.UPLOADER_MIDDLEWARE_VALID_MIME.includes(file.mimetype)) {
         req.isFileValid = true
         cb(null, true);
     } else {
@@ -54,6 +45,6 @@ module.exports = {
         limits: {
             fileSize: 1024 * 1024 * 10
         },
-        fileFilter: multiFileFilter
+        fileFilter: fileFilter
     }).array('fotos', 5)
 }

@@ -3,6 +3,7 @@ const Posts = require('../publicaciones/model')
 const send = require('../../../utils/response')
 const fs = require('fs')
 const log = require('../../../utils/log')
+const config = require('../../../config/config')
 
 
 function update(req, res, next) {
@@ -18,7 +19,7 @@ function update(req, res, next) {
         }
 
         const userFilePath = './' + data.foto
-        if (fs.existsSync(userFilePath) && data.foto != 'uploads/users/default.jpg') {
+        if (fs.existsSync(userFilePath) && data.foto != config.DEFAULT_USER_IMAGE) {
             fs.unlinkSync(userFilePath)
         }
 
@@ -48,12 +49,12 @@ function remove(req, res, next) {
         }
 
         const userFilePath = './' + data.foto
-        if (fs.existsSync(userFilePath) && data.foto != 'uploads/users/default.jpg') {
+        if (fs.existsSync(userFilePath) && data.foto != config.DEFAULT_USER_IMAGE) {
             fs.unlinkSync(userFilePath)
         }
 
         const image = ({
-            foto: 'uploads/users/default.jpg'
+            foto: config.DEFAULT_USER_IMAGE
         })
 
         User.findByIdAndUpdate(req.body.user, { $set: image }, { new: true }, (error, user) => {
