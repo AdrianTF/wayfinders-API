@@ -45,7 +45,14 @@ const userSchema = mongoose.Schema({
     admin: {
         type: Boolean,
         default: false,
-    }
+    }/*,
+    lockUntil: {
+        type: Number
+    }, 
+    loginAttempts: {
+        type: Number,
+        default: 0
+    }*/
 })
 
 let User = mongoose.model('User', userSchema);

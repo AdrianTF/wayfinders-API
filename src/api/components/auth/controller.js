@@ -21,7 +21,7 @@ function login(req, res) {
             user.password
         );
 
-        if (!isValidPassword){
+        if (!isValidPassword) {
             console.log('Contraseña incorrecta');
             return send.response401(res)
         }
@@ -40,7 +40,7 @@ function register(req, res) {
         apellido: req.body.apellido,
         password: hashedPassword,
         email: req.body.email,
-        siguiendo: [], 
+        siguiendo: [],
         hora: moment().format('HH:mm:ss').toString(),
         fecha: moment().format('DD/MM/YYYY').toString()
     })
@@ -48,7 +48,7 @@ function register(req, res) {
     const token = service.generateToken(usuario._id, usuario.admin)
 
     usuario.save((error, data) => {
-        if(error){
+        if (error) {
             log.write(error)
             return send.response500(res)
         }
@@ -58,6 +58,81 @@ function register(req, res) {
         send.response201(res, token)
     })
 }
+
+function accountLockingLogin(req, res) {
+    const MAX_LOGIN_ATTEMPTS = 3
+    const LOCK_TIME = 0.5 * 60 * 1000
+    let currentTime = Date.now()
+
+    User.findOne({ _id: req.body._id }, (error, user) => {
+        if (error) {
+            log.write(error)
+            return send.response500(res)
+        }
+        if (!user) {
+            return send.response404(res)
+        }
+
+        isLocked = user.lockUntil && user.lockUntil > currentTime
+        hasLockExpired = user.lockUntil && user.lockUntil < currentTime
+        loginAttempts = user.loginAttempts
+
+        if (isLocked) return send.response401(res)
+
+        if (hasLockExpired) {
+            const update = {
+                $set: { loginAttempts: 0 },
+                $unset: { lockUntil: 1 }
+            }
+
+            User.updateOne({ _id: req.body._id }, update, (error, data) => {
+                if (error) {
+                    log.write(error)
+                    return send.response500(res)
+                }
+                loginAttempts = 0
+            })
+        }
+
+        const isValidPassword = bcrypt.compareSync(
+            req.body.password,
+            user.password
+        );
+
+        if (!isValidPassword) {
+            let updates = {
+                $inc: { loginAttemtps: 1 }
+            }
+            if (loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS) {
+                updates.$set = { lockUntil: Date.now + LOCK_TIME }
+            }
+            User.updateOne({ _id: req.body._id }, updates, (error, data) => {
+                if (error) {
+                    log.write(error)
+                    return send.response500(res)
+                }
+                console.log('Contraseña incorrecta');
+                return send.response401(res)
+            })
+        }
+        if (loginAttempts > 0) {
+            let updates = {
+                $set: { loginAttemtps: 0 },
+                $unset: { lockUntil: 1 }
+
+            }
+            User.updateOne({ _id: req.body._id }, updates, (error, data) => {
+                if (error) {
+                    log.write(error)
+                    return send.response500(res)
+                }
+            })
+        }
+        const token = service.generateToken(user._id, user.admin)
+        send.response200(res, token)
+    });
+}
+
 
 
 module.exports = {
