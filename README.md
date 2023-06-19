@@ -1,7 +1,7 @@
-# NodeJS and Expres API Rest
+# Wayfinders NodeJS and Expres API Rest
 
 ## Description
-This project is a NodeJS and Express API Rest that was developed as a interdisciplinary project by three students of Multiplatform App Developement Vocation Training (DAM). In addition, an [Android app] and a Windows desktop app have been developed together to make use of this API.
+This project is a NodeJS and Express API Rest that was developed as a interdisciplinary project by three students of Multiplatform App Developement Vocation Training (DAM). In addition, an Android app and a Windows desktop app have been developed together to make use of this API.
 
 The API serves as one of the integral components of the project, providing a robust and scalable backend system for handling various RESTful API endpoints.
 
@@ -93,7 +93,6 @@ Full project documentation can be found [here].
 - [David Ferrer Barco]
 - Mario Bellido Jiménez 
 
-[Android app]: <https://github.com/DavidFerrerBarco/Intermodal>
 [Adrian Touriño Franco]: <https://www.linkedin.com/in/adrian-tourinio/>
 [David Ferrer Barco]: <https://github.com/DavidFerrerBarco>
 [here]: <https://mega.nz/file/s8MxTDAT#VQqv5_uO-6ZXpGeOD9UAR7WzjQIsAir5Kre3nPlIy1Q>
