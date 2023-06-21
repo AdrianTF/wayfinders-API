@@ -96,5 +96,5 @@ Full project documentation can be found [here].
 [Windows desktop app]: <https://github.com/maxrio21/INTERMODULAR>
 [Adrian Touriño Franco]: <https://www.linkedin.com/in/adrian-tourinio/>
 [David Ferrer Barco]: <https://github.com/DavidFerrerBarco>
-[Mario Bellido Jiménez]: <[Mario Bellido Jiménez]>
+[Mario Bellido Jiménez]: <https://github.com/maxrio21>
 [here]: <https://mega.nz/file/s8MxTDAT#VQqv5_uO-6ZXpGeOD9UAR7WzjQIsAir5Kre3nPlIy1Q>
