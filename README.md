@@ -1,7 +1,7 @@
 # Wayfinders NodeJS and Expres API Rest
 
 ## Description
-This project is a NodeJS and Express API Rest that was developed as a interdisciplinary project by three students of Multiplatform App Developement Vocation Training (DAM). In addition, an Android app and a Windows desktop app have been developed together to make use of this API.
+This project is a NodeJS and Express API Rest that was developed as a interdisciplinary project by three students of Multiplatform App Developement Vocation Training (DAM). In addition, an Android app and a [Windows desktop app] have been developed together to make use of this API.
 
 The API serves as one of the integral components of the project, providing a robust and scalable backend system for handling various RESTful API endpoints.
 
@@ -91,9 +91,10 @@ Full project documentation can be found [here].
 ## Contributors
 - [Adrian Touriño Franco] 
 - [David Ferrer Barco]
-- Mario Bellido Jiménez 
+- [Mario Bellido Jiménez]
 
+[Windows desktop app]: <https://github.com/maxrio21/INTERMODULAR>
 [Adrian Touriño Franco]: <https://www.linkedin.com/in/adrian-tourinio/>
 [David Ferrer Barco]: <https://github.com/DavidFerrerBarco>
+[Mario Bellido Jiménez]: <[Mario Bellido Jiménez]>
 [here]: <https://mega.nz/file/s8MxTDAT#VQqv5_uO-6ZXpGeOD9UAR7WzjQIsAir5Kre3nPlIy1Q>
-   
