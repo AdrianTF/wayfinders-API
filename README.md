@@ -1,7 +1,7 @@
 # Wayfinders NodeJS and Expres API Rest
 
 ## Description
-This project is a NodeJS and Express API Rest that was developed as a interdisciplinary project by three students of Multiplatform App Developement Vocation Training (DAM). In addition, an Android app and a [Windows desktop app] have been developed together to make use of this API.
+This project is a NodeJS and Express API Rest that was developed as an interdisciplinary project by three students of Multiplatform App Developement Vocation Training (DAM). In addition, an Android app and a [Windows desktop app] have been developed together to make use of this API.
 
 The API serves as one of the integral components of the project, providing a robust and scalable backend system for handling various RESTful API endpoints.
 
